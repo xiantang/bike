@@ -11,17 +11,26 @@ import java.util.concurrent.TimeUnit;
 public class UserServiceImp implements UserService {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
     @Override
     public boolean sendMsg(String phoneNum) {
         String appkey = stringRedisTemplate.opsForValue().get("appkey");
         String tempId = stringRedisTemplate.opsForValue().get("tempId");
-        String id  =(int)(Math.random()*(9999-1000+1)+1000)+"";
-        boolean status = SmsUtil.mobileQuery(phoneNum,id,appkey,tempId);
-        if (status){
+        String id = (int) (Math.random() * (9999 - 1000 + 1) + 1000) + "";
+        boolean status = SmsUtil.mobileQuery(phoneNum, id, appkey, tempId);
+        if (status) {
             stringRedisTemplate.opsForValue().set(phoneNum, id, 300, TimeUnit.SECONDS);
         }
         return status;
 
     }
 
+    @Override
+    public boolean verify(String phoneNum, String verifyCode) {
+        String redisVerifyCode = stringRedisTemplate.opsForValue().get(phoneNum);
+        if (redisVerifyCode != null && redisVerifyCode.equals(verifyCode)) {
+            return true;
+        }
+        return false;
+    }
 }
