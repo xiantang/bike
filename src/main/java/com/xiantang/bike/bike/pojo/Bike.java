@@ -1,8 +1,26 @@
 package com.xiantang.bike.bike.pojo;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "bikes")
 public class Bike {
+    @Id
     private String id;
     private double longitude;
+    private double latitude;
+    private int status;
+    @Indexed
+    private Long bikeNo;
+
+    public Long getBikeNo() {
+        return bikeNo;
+    }
+
+    public void setBikeNo(Long bikeNo) {
+        this.bikeNo = bikeNo;
+    }
 
     public String getId() {
         return id;
@@ -36,6 +54,5 @@ public class Bike {
         this.status = status;
     }
 
-    private double latitude;
-    private int status;
+
 }
