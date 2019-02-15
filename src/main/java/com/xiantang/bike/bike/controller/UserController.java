@@ -1,8 +1,10 @@
 package com.xiantang.bike.bike.controller;
 
+import com.xiantang.bike.bike.pojo.User;
 import com.xiantang.bike.bike.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,5 +30,19 @@ public class UserController {
 //        System.out.println(1);
         boolean flag = userService.verify(phoneNum, verifyCode);
         return flag;
+    }
+
+    @RequestMapping("/user/register")
+    @ResponseBody
+    // 接受RequestsBody
+    public boolean register(@RequestBody User user){
+//        System.out.println(1);
+        try {
+            userService.register(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

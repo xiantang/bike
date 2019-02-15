@@ -1,7 +1,9 @@
 package com.xiantang.bike.bike.service;
 
+import com.xiantang.bike.bike.pojo.User;
 import com.xiantang.bike.bike.until.SmsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,12 @@ public class UserServiceImp implements UserService {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
+
     @Override
+
     public boolean sendMsg(String phoneNum) {
         String appkey = stringRedisTemplate.opsForValue().get("appkey");
         String tempId = stringRedisTemplate.opsForValue().get("tempId");
@@ -32,5 +39,10 @@ public class UserServiceImp implements UserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void register(User user) {
+        mongoTemplate.insert(user);
     }
 }
