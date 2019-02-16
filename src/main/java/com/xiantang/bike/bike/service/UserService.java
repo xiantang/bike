@@ -8,4 +8,6 @@ public interface UserService {
     boolean verify(String phoneNum, String verifyCode);
 
     void register(User user);
+
+    void update(User user);
 }

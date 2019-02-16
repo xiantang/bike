@@ -19,6 +19,11 @@ public class UserServiceImp implements UserService {
 
 
     @Override
+    public void update(User user) {
+        mongoTemplate.insert(user);
+    }
+
+    @Override
 
     public boolean sendMsg(String phoneNum) {
         String appkey = stringRedisTemplate.opsForValue().get("appkey");

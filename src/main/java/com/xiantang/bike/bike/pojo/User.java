@@ -13,16 +13,26 @@ public class User {
     private String id;
 
     // 唯一索引
-    @Indexed(unique = true)
+    @Indexed
     private String phoneNum;
 
     private Date regDate;
 
     private String nickName;
 
+    private Double deposit;
+
     private String name;
 
     private String idNum;
+
+    public Double getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(Double deposit) {
+        this.deposit = deposit;
+    }
 
     public String getId() {
         return id;

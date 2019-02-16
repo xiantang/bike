@@ -45,4 +45,18 @@ public class UserController {
         }
         return true;
     }
+
+
+    @RequestMapping("/user/deposite")
+    @ResponseBody
+    public boolean deposite(@RequestBody User user) {
+        try {
+            userService.update(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
 }
