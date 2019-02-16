@@ -4,6 +4,9 @@ import com.xiantang.bike.bike.pojo.User;
 import com.xiantang.bike.bike.until.SmsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +23,34 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void update(User user) {
-        mongoTemplate.insert(user);
+        Update update = new Update();
+        if (user.getDeposit() != null) {
+            update.set("deposit", user.getDeposit());
+        }
+        if (user.getStatus() != 0) {
+            update.set("status", user.getStatus());
+        }
+        if (user.getName() != null) {
+            update.set("name", user.getName());
+        }
+        if (user.getIdNum() != null) {
+            update.set("idNum", user.getIdNum());
+        }
+        mongoTemplate.updateFirst(new Query(Criteria.where("phoneNum").is(user.getPhoneNum())),
+                update, User.class);
+//        mongoTemplate.updateFirst(new Query(Criteria.where("phoneNum").is(user.getPhoneNum())),
+//                Update.update("status", user.getStatus()), User.class);
     }
+
+//    @Override
+//    public void identify(User user) {
+//        mongoTemplate.updateFirst(new Query(Criteria.where("phoneNum").is(user.getPhoneNum())),
+//                Update.update("status", user.getStatus()), User.class);
+//        mongoTemplate.updateFirst(new Query(Criteria.where("phoneNum").is(user.getPhoneNum())),
+//                Update.update("idNum", user.getIdNum()), User.class);
+//        mongoTemplate.updateFirst(new Query(Criteria.where("phoneNum").is(user.getPhoneNum())),
+//                Update.update("name", user.getName()), User.class);
+//    }
 
     @Override
 

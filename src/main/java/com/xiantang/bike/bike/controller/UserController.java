@@ -59,4 +59,19 @@ public class UserController {
         return true;
     }
 
+
+    @RequestMapping("/user/identify")
+    @ResponseBody
+    public boolean identify(@RequestBody User user) {
+        try {
+            userService.update(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+
+    }
+
+
 }
