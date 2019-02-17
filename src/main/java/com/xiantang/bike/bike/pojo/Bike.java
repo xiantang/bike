@@ -1,6 +1,8 @@
 package com.xiantang.bike.bike.pojo;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -8,8 +10,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Bike {
     @Id
     private String id;
-    private double longitude;
-    private double latitude;
+    //    private double longitude;
+//    private double latitude;
+
+    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
+    private double[] location;
+
     private int status;
     @Indexed
     private Long bikeNo;
@@ -30,21 +36,29 @@ public class Bike {
         this.id = id;
     }
 
-    public double getLongitude() {
-        return longitude;
+//    public double getLongitude() {
+//        return longitude;
+//    }
+//
+//    public void setLongitude(double longitude) {
+//        this.longitude = longitude;
+//    }
+//
+//    public double getLatitude() {
+//        return latitude;
+//    }
+//
+
+    public double[] getLocation() {
+        return location;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setLocation(double[] location) {
+        this.location = location;
     }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
+//    public void setLatitude(double latitude) {
+//        this.latitude = latitude;
+//    }
 
     public int getStatus() {
         return status;
